@@ -3,15 +3,15 @@ const { addBeforeLoader } = require('@craco/craco')
 
 module.exports = {
   webpack: {
-    configure: function(webpackConfig) {
+    configure: function (webpackConfig) {
       const wasmLoader = {
         test: /\.wasm$/,
-        type: "webassembly/experimental"
+        type: 'webassembly/experimental'
       }
 
-      addBeforeLoader(webpackConfig, loaderByName('file-loader'), wasmLoader);
+      addBeforeLoader(webpackConfig, loaderByName('file-loader'), wasmLoader)
 
-      return webpackConfig;
+      return webpackConfig
     }
   }
 }
