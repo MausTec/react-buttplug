@@ -6,13 +6,11 @@ module.exports = {
     configure: function(webpackConfig) {
       const wasmLoader = {
         test: /\.wasm$/,
-        use: ['wasm-loader'],
-        type: "javascript/auto"
+        type: "webassembly/experimental"
       }
 
       addBeforeLoader(webpackConfig, loaderByName('file-loader'), wasmLoader);
 
-      // webpackConfig.
       return webpackConfig;
     }
   }

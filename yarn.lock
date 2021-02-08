@@ -2822,7 +2822,7 @@ builtin-status-codes@^3.0.0:
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
   integrity sha1-hZgoeOIbmOHGZCXgPQF0eI9Wnug=
 
-buttplug@^1.0.7:
+buttplug@^1.0.6:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/buttplug/-/buttplug-1.0.7.tgz#a21c36fdf437d8f900775e6d5c70858fda4331a0"
   integrity sha512-oSzBSGoXr2xfw5ChyoC6ig/dkVRogpOOJDwr2YK5FT5yGM+YvvGnY8eEiVb4PUuAfCWVQyBbKSE3q4VhqHBWUA==
@@ -11356,6 +11356,14 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   integrity sha512-O84QOnr0icsbFGLS0O3bI5FswxzRr8/gHwWkDlQFskhSPryQXvrTMxjxGP4+iWYoauLoBvfDpkrOauZ+0iZpDA==
   dependencies:
     minimalistic-assert "^1.0.0"
+
+webassembly-loader@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/webassembly-loader/-/webassembly-loader-1.1.0.tgz#9bee44280fdd61c497d8854f5bc0e8350837666f"
+  integrity sha512-w/uqWyIXooL8yFrqaMJkh42tu04zdEFHY3ZLRh1Yi0Fjd633B8T99k4K5weN5fHrlVYDqYO3K8Q8eBalvto79A==
+  dependencies:
+    loader-utils "^1.1.0"
+    schema-utils "^1.0.0"
 
 webidl-conversions@^4.0.2:
   version "4.0.2"

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import * as wasm from 'buttplug/dist/module/buttplug-rs-ffi/buttplug_rs_ffi_bg.wasm'
 
 import {
   buttplugInit,
@@ -22,7 +21,8 @@ import {
   createDevicePtr,
   freeClientPtr,
   freeDevicePtr,
-  activateConsoleLogger
+  activateConsoleLogger,
+  ButtplugMessageSorter
 } from 'buttplug'
 
 class ButtplugProvider extends Component {
@@ -36,17 +36,34 @@ class ButtplugProvider extends Component {
 
   componentDidMount() {
     buttplugInit().then(() => {
-      console.log('buttplug is ready.', wasm)
+      console.log('buttplug is ready.')
       this.setState({ buttplugReady: true })
-      if (this.props.logLevel) activateConsoleLogger(this.props.logLevel)
+      if (this.props.logLevel) {
+        activateConsoleLogger(this.props.logLevel)
+      }
     })
+  }
+
+  handleScanClick(e) {
+    e.preventDefault()
+
+    const s = new ButtplugMessageSorter()
+
+    const p = createClientPtr((p) => {
+      console.log('event', p)
+    }, 'react-buttplug')
+
+    console.log(p)
+    startScanning(s, p)
+      .then(console.log)
+      .catch(console.error)
   }
 
   render() {
     if (!this.state.buttplugReady) {
       return(<p>Waiting for buttplug...</p>)
     } else {
-      return(<p>Buttplug is ready!</p>)
+      return(<p><a href={"#"} onClick={this.handleScanClick}>scan bluetooth</a></p>)
     }
   }
 }
