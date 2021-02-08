@@ -6,7 +6,7 @@ module.exports = {
     configure: function(webpackConfig) {
       const wasmLoader = {
         test: /\.wasm$/,
-        use: ['wasm-loader'],
+        use: ['file-loader'],
         type: "javascript/auto"
       }
 

@@ -10,10 +10,20 @@
 npm install --save react-buttplug
 ```
 
-Since `buttplug` requires a WASM blob, you'll need to add `wasm-loader` to Webpack if that's a thing you use.
+Since `buttplug` requires a WASM blob, you'll need to tell Webpack to serve that up using the `file-loader` and set a type.
 If you're using `create-react-app`, check out `CRACO`:
 
 `https://github.com/gsoft-inc/craco`
+
+You may also need some more heap space for Javascript to avoid taking Buttplug dry.
+
+```
+set NODE_OPTIONS=--max_old_space_size=4096
+# or if you're normal and use unix-y things
+export NODE_OPTIONS=--max_old_space_size=4096
+```
+
+Check out `example/` for a create-react-app setup that initializes Buttplug.
 
 ## Usage
 
