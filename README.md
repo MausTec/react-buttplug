@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-npm install --save react-buttplug
+npm install --save @maustec/react-buttplug
 ```
 
 Since `buttplug` requires a WASM blob, you'll need to tell Webpack to serve that up using the `file-loader` and set a type.

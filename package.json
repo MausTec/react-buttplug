@@ -1,6 +1,6 @@
 {
   "name": "@maustec/react-buttplug",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "React provider for Buttplug.io&#x27;s buttplug-js",
   "author": "MausTec",
   "license": "MIT",
@@ -51,7 +51,6 @@
     "dist"
   ],
   "dependencies": {
-    "@craco/craco": "^6.1.1",
     "buttplug": "^1.0.7",
     "yarn": "^1.22.10"
   }

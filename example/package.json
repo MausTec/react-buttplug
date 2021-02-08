@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@craco/craco": "5.8.0",
+    "arraybuffer-loader": "^1.0.8",
     "react": "link:../node_modules/react",
     "react-buttplug": "link:..",
     "react-dom": "link:../node_modules/react-dom",
     "react-scripts": "link:../node_modules/react-scripts",
+    "wasm-dce": "^1.0.2",
     "wasm-loader": "^1.3.0"
   },
   "devDependencies": {

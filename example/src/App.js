@@ -4,7 +4,7 @@ import ButtplugProvider from 'react-buttplug'
 import 'react-buttplug/dist/index.css'
 
 const App = () => {
-  return <ButtplugProvider />
+  return <ButtplugProvider logLevel={"debug"} />
 }
 
 export default App

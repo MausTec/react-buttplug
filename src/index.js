@@ -1,5 +1,29 @@
 import React, { Component } from 'react'
-import { buttplugInit } from 'buttplug'
+import * as wasm from 'buttplug/dist/module/buttplug-rs-ffi/buttplug_rs_ffi_bg.wasm'
+
+import {
+  buttplugInit,
+  connectEmbedded,
+  connectWebsocket,
+  disconnect,
+  startScanning,
+  stopAllDevices,
+  vibrate,
+  rotate,
+  linear,
+  stopDevice,
+  batteryLevel,
+  rssiLevel,
+  rawRead,
+  rawWrite,
+  rawSubscribe,
+  rawUnsubscribe,
+  createClientPtr,
+  createDevicePtr,
+  freeClientPtr,
+  freeDevicePtr,
+  activateConsoleLogger
+} from 'buttplug'
 
 class ButtplugProvider extends Component {
   constructor(props) {
@@ -12,8 +36,9 @@ class ButtplugProvider extends Component {
 
   componentDidMount() {
     buttplugInit().then(() => {
-      console.log('buttplug is ready.')
+      console.log('buttplug is ready.', wasm)
       this.setState({ buttplugReady: true })
+      if (this.props.logLevel) activateConsoleLogger(this.props.logLevel)
     })
   }
 
