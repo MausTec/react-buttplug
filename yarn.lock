@@ -11357,14 +11357,6 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-webassembly-loader@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/webassembly-loader/-/webassembly-loader-1.1.0.tgz#9bee44280fdd61c497d8854f5bc0e8350837666f"
-  integrity sha512-w/uqWyIXooL8yFrqaMJkh42tu04zdEFHY3ZLRh1Yi0Fjd633B8T99k4K5weN5fHrlVYDqYO3K8Q8eBalvto79A==
-  dependencies:
-    loader-utils "^1.1.0"
-    schema-utils "^1.0.0"
-
 webidl-conversions@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"

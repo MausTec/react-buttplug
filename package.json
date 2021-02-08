@@ -1,6 +1,6 @@
 {
   "name": "@maustec/react-buttplug",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "React provider for Buttplug.io&#x27;s buttplug-js",
   "author": "MausTec",
   "license": "MIT",
