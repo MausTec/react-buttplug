@@ -6,7 +6,7 @@ import {
 
 const VibratorControls = () => {
   const { devices } = useContext(ButtplugDeviceContext)
-  const [ vibrateSpeed, setVibrateSpeed ] = useState(0.0)
+  const [vibrateSpeed, setVibrateSpeed] = useState(0.0)
 
   const handleVibrateChange = (e) => {
     setVibrateSpeed(parseFloat(e.target.value))
@@ -18,19 +18,20 @@ const VibratorControls = () => {
 
   return (
     <div>
-      <input type='number'
-             min='0'
-             max='1'
-             value={ vibrateSpeed }
-             onChange={ handleVibrateChange }
+      <input
+        type='number'
+        min='0'
+        max='1'
+        value={vibrateSpeed}
+        onChange={handleVibrateChange}
       />
 
       <ul>
-        { devices.map((device) => (
+        {devices.map((device) => (
           <ButtplugDeviceController device={device} vibrate={vibrateSpeed}>
-            <li>{ device.Name }</li>
+            <li>{device.Name}</li>
           </ButtplugDeviceController>
-        )) }
+        ))}
       </ul>
     </div>
   )

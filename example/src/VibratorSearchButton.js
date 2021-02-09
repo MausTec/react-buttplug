@@ -3,13 +3,13 @@ import { ButtplugDeviceContext } from '@maustec/react-buttplug'
 
 const VibratorSearchButton = () => {
   const { buttplugReady, startScanning } = useContext(ButtplugDeviceContext)
-  const [ pairing, setPairing ] = useState(false)
+  const [pairing, setPairing] = useState(false)
 
   const handleClick = (e) => {
     e.preventDefault()
     setPairing(true)
     startScanning()
-      .then(msg => {
+      .then((msg) => {
         setPairing(false)
         console.log(msg)
       })
@@ -17,17 +17,15 @@ const VibratorSearchButton = () => {
   }
 
   if (pairing) {
-    return (
-      <p>Pairing with devices...</p>
-    )
+    return <p>Pairing with devices...</p>
   } else if (buttplugReady) {
     return (
-      <a onClick={handleClick} href='#'>Start Searching</a>
+      <a onClick={handleClick} href={'#'}>
+        Start Searching
+      </a>
     )
   } else {
-    return (
-      <p>Waiting for Buttplugs...</p>
-    )
+    return <p>Waiting for Buttplugs...</p>
   }
 }
 
