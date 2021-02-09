@@ -106,7 +106,7 @@ const VibratorControls = () => {
 
       <ul>
         { devices.map((device) => (
-          <ButtplugDeviceController device={device} vibrate={vibrateSpeed}>
+          <ButtplugDeviceController key={device.Index} device={device} vibrate={vibrateSpeed}>
             <li>{ device.Name }</li>
           </ButtplugDeviceController>
         )) }
@@ -115,6 +115,10 @@ const VibratorControls = () => {
   )
 }
 ```
+
+## TODO
+
+- Find a way to indicate a pending device pairing, e.g. after clicking "Pair" and before `deviceadded` fires.
 
 ## License
 

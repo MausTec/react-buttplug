@@ -28,7 +28,7 @@ const VibratorControls = () => {
 
       <ul>
         {devices.map((device) => (
-          <ButtplugDeviceController device={device} vibrate={vibrateSpeed}>
+          <ButtplugDeviceController key={device.Index} device={device} vibrate={vibrateSpeed}>
             <li>{device.Name}</li>
           </ButtplugDeviceController>
         ))}

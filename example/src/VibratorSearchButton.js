@@ -20,7 +20,7 @@ const VibratorSearchButton = () => {
     return <p>Pairing with devices...</p>
   } else if (buttplugReady) {
     return (
-      <a onClick={handleClick} href={'#'}>
+      <a onClick={handleClick} href={'#/'}>
         Start Searching
       </a>
     )
