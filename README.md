@@ -53,7 +53,7 @@ const App = () => {
 ### Then consume the context to create, for example, a connect button:
 
 ```jsx
-import { useContext } from 'react'
+import React, { useContext } from 'react'
 import { ButtplugDeviceContext } from '@maustec/react-buttplug'
 
 const VibratorSearchButton = () => {
@@ -78,10 +78,10 @@ const VibratorSearchButton = () => {
 }
 ```
 
-##E Finally, you can do things with the devices here:
+### Finally, you can do things with the devices here:
 
 ```jsx
-import { useContext, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {
   ButtplugDeviceContext,
   ButtplugDeviceController
@@ -103,15 +103,15 @@ const VibratorControls = () => {
              value={ vibrateSpeed }
              onChange={ handleVibrateChange }
       />
-    </div>
 
-    <ul>
-      { devices.map((device) => (
-        <ButtplugDeviceController device={device} vibrate={vibrateSpeed}>
-          <li>{ device.Name }</li>
-        </ButtplugDeviceController>
-      )) }
-    </ul>
+      <ul>
+        { devices.map((device) => (
+          <ButtplugDeviceController device={device} vibrate={vibrateSpeed}>
+            <li>{ device.Name }</li>
+          </ButtplugDeviceController>
+        )) }
+      </ul>
+    </div>
   )
 }
 ```

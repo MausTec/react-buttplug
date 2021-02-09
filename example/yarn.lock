@@ -1309,6 +1309,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
+"@maustec/react-buttplug@link:..":
+  version "0.0.0"
+  uid ""
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -8529,10 +8533,6 @@ react-app-polyfill@^1.0.6:
     raf "^3.4.1"
     regenerator-runtime "^0.13.3"
     whatwg-fetch "^3.0.0"
-
-"react-buttplug@link:..":
-  version "0.0.0"
-  uid ""
 
 react-dev-utils@^10.2.1:
   version "10.2.1"
