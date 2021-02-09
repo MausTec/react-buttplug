@@ -1,6 +1,6 @@
 {
   "name": "@maustec/react-buttplug",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "React provider for Buttplug.io&#x27;s buttplug-js",
   "author": "MausTec",
   "license": "MIT",
@@ -23,7 +23,8 @@
     "predeploy": "cd example && yarn install && yarn run build",
     "deploy": "gh-pages -d example/build",
     "prettier": "prettier --write src/**/*.js example/*.js example/src/**/*.js",
-    "prettier:check": "prettier --check src/**/*.js example/*.js example/src/**/*.js"
+    "prettier:check": "prettier --check src/**/*.js example/*.js example/src/**/*.js",
+    "doc": "react-doc-generator ./src -o DOCUMENTATION.md"
   },
   "peerDependencies": {
     "react": "^16.0.0"
@@ -46,6 +47,7 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.4",
     "react": "^16.13.1",
+    "react-doc-generator": "^1.2.5",
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.1"
   },
@@ -54,6 +56,7 @@
   ],
   "dependencies": {
     "buttplug": "^1.0.6",
+    "prop-types": "^15.7.2",
     "yarn": "^1.22.10"
   }
 }

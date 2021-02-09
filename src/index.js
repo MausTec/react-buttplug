@@ -1,28 +1,135 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import ButtplugDeviceContext, { defaultContext } from './ButtplugDeviceContext'
+import ButtplugDeviceController from './ButtplugDeviceController'
 
 import {
   buttplugInit,
   activateConsoleLogger,
-  ButtplugWebsocketConnectorOptions,
   ButtplugEmbeddedConnectorOptions,
   ButtplugClient
 } from 'buttplug'
 
+/**
+ * Wrap your app in this and you'll be able to consume `ButtplugContext` wherever
+ * you need control of buttplugs. Any methods of interest are available on the
+ * context.
+ *
+ * @example First, provide your App.
+ * ```
+ * import { ButtplugProvider } from '@maustec/react-buttplug'
+ * import {
+ *   VibratorSearchButton,
+ *   VibratorControls
+ * } from 'the-next-examples'
+ *
+ * const App = () => {
+ *   return (
+ *     <ButtplugProvider serverName={"buttplugs."}>
+ *       <VibratorSearchButton />
+ *       <VibratorControls />
+ *     </ButtplugProvider>
+ *   )
+ * }
+ * ```
+ *
+ * @example Then consume the context to create, for example, a connect button:
+ * ```
+ * import { useContext } from 'react'
+ * import { ButtplugDeviceContext } from '@maustec/react-buttplug'
+ *
+ * const VibratorSearchButton = () => {
+ *   const { buttplugReady, startSearching } = useContext(ButtplugDeviceContext);
+ *
+ *   const handleClick = (e) => {
+ *     e.preventDefault();
+ *     startSearching()
+ *       .then(console.log)
+ *       .catch(console.error)
+ *    }
+ *
+ *   if (buttplugReady) {
+ *     return (
+ *       <a onClick={handleClick} href='#'>Start Searching</a>
+ *     )
+ *   } else {
+ *     return (
+ *       <p>Waiting for Buttplugs...</p>
+ *     )
+ *   }
+ * }
+ * ```
+ *
+ * @example Finally, you can do things with the devices here:
+ * ```
+ * import { useContext, useState } from 'react'
+ * import {
+ *   ButtplugDeviceContext,
+ *   ButtplugDeviceController
+ * } from '@maustec/react-buttplug'
+ *
+ * const VibratorControls = () => {
+ *   const { devices } = useContext(ButtplugDeviceContext)
+ *   const [ vibrateSpeed, setVibrateSpeed ] = useState(0.0);
+ *
+ *   const handleVibrateChange = (e) => {
+ *     setVibrateSpeed(parseFloat(e.target.value))
+ *   }
+ *
+ *   return (
+ *     <div>
+ *       <input type='number'
+ *              min='0'
+ *              max='1'
+ *              value={ vibrateSpeed }
+ *              onChange={ handleVibrateChange }
+ *       />
+ *     </div>
+ *
+ *     <ul>
+ *       { devices.map((device) => (
+ *         <ButtplugDeviceController device={device} vibrate={vibrateSpeed}>
+ *           <li>{ device.Name }</li>
+ *         </ButtplugDeviceController>
+ *       )) }
+ *     </ul>
+ *   )
+ * }
+ * ```
+ */
 class ButtplugProvider extends Component {
   static propTypes = {
-    logLevel: PropTypes.oneOf([
-      'fatal',
-      'error',
-      'warn',
-      'info',
-      'debug',
-      'trace'
-    ]),
+    /**
+     * Passing a `logLevel` here will enable Buttplug's console logger.
+     */
+    logLevel: PropTypes.oneOf(['error', 'warn', 'info', 'debug', 'trace']),
+
+    /**
+     * This name will be passed to the ButtplugClient instance. It's arbitrary.
+     */
     clientName: PropTypes.string,
+
+    /**
+     * This name will be passed to the embedded Buttplug Server. Also arbitrary.
+     */
     serverName: PropTypes.string,
-    children: PropTypes.func,
+
+    /**
+     * The rest of your app goes here, now with 110% more ButtplugDeviceContext.
+     */
+    children: PropTypes.node,
+
+    /**
+     * Callback if you wish to handle Buttplug errors and rejections. Usually
+     * receives a String-like thing.
+     */
     onError: PropTypes.func,
+
+    /**
+     * Callback will be execute when the client connects to its own server.
+     * At this point, Buttplug will be truly ready, but you can also just
+     * wait for `context.buttplugReady` to become true.
+     */
     onConnect: PropTypes.func
   }
 
@@ -30,18 +137,13 @@ class ButtplugProvider extends Component {
     super(props)
 
     this.state = {
-      buttplugReady: false,
-      devices: []
+      ...defaultContext
     }
 
     this.client = null
 
-    this.handleScanClick = this.handleScanClick.bind(this)
-    this.handleEmbeddedConnect = this.handleEmbeddedConnect.bind(this)
     this.addDevice = this.addDevice.bind(this)
     this.removeDevice = this.removeDevice.bind(this)
-
-    this.vibrateDevice = this.vibrateDevice.bind(this)
   }
 
   addDevice(device) {
@@ -63,8 +165,6 @@ class ButtplugProvider extends Component {
 
   componentDidMount() {
     buttplugInit().then(() => {
-      console.log('buttplug is ready.')
-
       this.client = new ButtplugClient(this.props.clientName)
       this.client.addListener('deviceadded', this.addDevice)
       this.client.addListener('deviceremoved', this.addDevice)
@@ -77,7 +177,11 @@ class ButtplugProvider extends Component {
         .then(this.props.onConnect)
         .catch(this.props.onError)
 
-      this.setState({ buttplugReady: true })
+      this.setState({
+        buttplugReady: true,
+        client: this.client,
+        startScanning: this.client.startScanning
+      })
 
       if (this.props.logLevel) {
         activateConsoleLogger(this.props.logLevel)
@@ -85,68 +189,13 @@ class ButtplugProvider extends Component {
     })
   }
 
-  handleScanClick(e) {
-    e.preventDefault()
-
-    this.client
-      .startScanning()
-      .then((data) => console.log('promise', data))
-      .catch((error) => console.error('error', error))
-  }
-
-  handleEmbeddedConnect(e) {
-    e.preventDefault()
-
-    const options = new ButtplugEmbeddedConnectorOptions()
-    options.ServerName = 'react-buttplug-server'
-
-    this.client
-      .connect(options)
-      .then((data) => console.log('promise', data))
-      .catch((error) => console.error('error', error))
-  }
-
-  vibrateDevice(device) {
-    return (e) => {
-      e.preventDefault()
-      console.log(e.target.value)
-      device
-        .vibrate(parseFloat(e.target.value))
-        .then(console.log)
-        .catch(console.error)
-    }
-  }
-
   render() {
-    if (!this.state.buttplugReady) {
-      return <p>Waiting for buttplug...</p>
-    } else {
-      return (
-        <div>
-          <a href='#' onClick={this.handleScanClick}>
-            scan bluetooth
-          </a>
-          <br />
-          <ul>
-            {this.state.devices.map((device) => (
-              <li key={device.Index}>
-                <div>
-                  {device.Name} ({device.Index})
-                </div>
-                <input
-                  type={'number'}
-                  min={0}
-                  max={1}
-                  onChange={this.vibrateDevice(device)}
-                  defaultValue={0}
-                />
-              </li>
-            ))}
-          </ul>
-        </div>
-      )
-    }
+    return (
+      <ButtplugDeviceContext.Provider value={this.state}>
+        {this.props.children}
+      </ButtplugDeviceContext.Provider>
+    )
   }
 }
 
-export default ButtplugProvider
+export { ButtplugProvider, ButtplugDeviceContext, ButtplugDeviceController }
